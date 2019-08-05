@@ -1,0 +1,88 @@
+import React,{Component,Fragment} from 'react';
+import shortid from 'shortid';
+import './style.css';
+import XiaojiejieItem from "./XiaojiejieItem";
+
+class Xiaojiejie extends Component {
+    constructor(props){
+        super(props);
+        this.inputChange = this.inputChange.bind(this);
+        this.add = this.add.bind(this);
+        this.remove = this.remove.bind(this);
+        this.onKeyUp = this.onKeyUp.bind(this);
+        this.state = {
+            inputValue:'',
+            list:[
+                {id:shortid.generate(),value:'基础按摩'},
+                {id:shortid.generate(),value:'精油推背'}
+            ]
+        }
+    }
+    render() {
+        return (
+            <Fragment>
+                <div>
+                    {/* for改为htmlFor,class改成className */}
+                    <label htmlFor="serviceName">增加服务：</label>
+                    <input 
+                        id="serviceName" 
+                        className="input" 
+                        value={this.state.inputValue} 
+                        onChange={this.inputChange}
+                        onKeyUp={this.onKeyUp}
+                    />
+                    <button onClick={this.add}>增加服务</button>
+                </div>
+                <ul>
+                    {
+                        this.state.list.map((item,index)=>{
+                            return (
+                            // <li key={item.id}>
+                            //     <span dangerouslySetInnerHTML={{__html:item.value}}></span>
+                            //     <button data-id={item.id} onClick={this.remove}>删除</button>
+                            // </li> 
+                                <XiaojiejieItem key={item.id} content={item}/>
+                            )
+                        })
+                    }
+                </ul>
+            </Fragment>
+        );
+    }
+
+    inputChange(e){
+        // console.log(e.target.value);
+        // this.state.inputValue=e.target.value;
+        this.setState({
+            inputValue: e.target.value
+        })
+    }
+    onKeyUp(e){
+        if(e.keyCode === 13) {
+            this.add()
+        }
+    }
+    add(){
+        if(!this.state.inputValue){
+            return
+        }
+        this.setState({
+            //...this.state.list相当于数组中原来的元素
+            list:[...this.state.list,{id:shortid.generate(),value:this.state.inputValue}],
+            inputValue:''
+        })
+    }
+    
+    remove(e){
+       let index = e.target.getAttribute('data-id');
+       //这样可以避免直接操作 this.state.list
+       let list = [...this.state.list];
+       list = list.filter((listItem) => listItem.id !== index);
+       this.setState({
+           list: list
+       });
+    }
+    
+}
+
+export default Xiaojiejie;
