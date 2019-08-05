@@ -7,8 +7,8 @@ class Xiaojiejie extends Component {
     constructor(props){
         super(props);
         this.inputChange = this.inputChange.bind(this);
-        this.add = this.add.bind(this);
-        this.remove = this.remove.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
         this.onKeyUp = this.onKeyUp.bind(this);
         this.state = {
             inputValue:'',
@@ -31,7 +31,7 @@ class Xiaojiejie extends Component {
                         onChange={this.inputChange}
                         onKeyUp={this.onKeyUp}
                     />
-                    <button onClick={this.add}>增加服务</button>
+                    <button onClick={this.addItem}>增加服务</button>
                 </div>
                 <ul>
                     {
@@ -39,9 +39,14 @@ class Xiaojiejie extends Component {
                             return (
                             // <li key={item.id}>
                             //     <span dangerouslySetInnerHTML={{__html:item.value}}></span>
-                            //     <button data-id={item.id} onClick={this.remove}>删除</button>
+                            //     <button data-id={item.id} onClick={this.deleteItem}>删除</button>
                             // </li> 
-                                <XiaojiejieItem key={item.id} content={item}/>
+                                <XiaojiejieItem 
+                                    key={item.id} 
+                                    content={item} 
+                                    deleteItem = {this.deleteItem}
+                                    // avname="Jane Doe"
+                                />
                             )
                         })
                     }
@@ -59,10 +64,10 @@ class Xiaojiejie extends Component {
     }
     onKeyUp(e){
         if(e.keyCode === 13) {
-            this.add()
+            this.addItem()
         }
     }
-    add(){
+    addItem(){
         if(!this.state.inputValue){
             return
         }
@@ -73,16 +78,22 @@ class Xiaojiejie extends Component {
         })
     }
     
-    remove(e){
-       let index = e.target.getAttribute('data-id');
-       //这样可以避免直接操作 this.state.list
-       let list = [...this.state.list];
-       list = list.filter((listItem) => listItem.id !== index);
-       this.setState({
-           list: list
-       });
-    }
-    
+    // deleteItem(e){
+    //    let index = e.target.getAttribute('data-id');
+    //    //这样可以避免直接操作 this.state.list
+    //    let list = [...this.state.list];
+    //    list = list.filter((listItem) => listItem.id !== index);
+    //    this.setState({
+    //        list: list
+    //    });
+    // }
+    deleteItem(itemId){
+        let list = [...this.state.list];
+        list = list.filter((listItem) => listItem.id !== itemId);
+        this.setState({
+            list: list
+        });
+     }
 }
 
 export default Xiaojiejie;
