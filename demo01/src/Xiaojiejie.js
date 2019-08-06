@@ -1,16 +1,14 @@
 import React, { Component, Fragment } from 'react';
+import axios from "axios";
 import shortid from 'shortid';
 import './style.css';
 import XiaojiejieItem from "./XiaojiejieItem";
+import Animation from './Animation';
 
 class Xiaojiejie extends Component {
     //生命周期函数指在某一个时刻组件会自动调用执行的函数
     constructor(props) {
         super(props);
-        this.inputChange = this.inputChange.bind(this);
-        this.addItem = this.addItem.bind(this);
-        this.deleteItem = this.deleteItem.bind(this);
-        this.onKeyUp = this.onKeyUp.bind(this);
         this.state = {
             inputValue: '',
             list: [
@@ -18,9 +16,24 @@ class Xiaojiejie extends Component {
                 { id: shortid.generate(), value: '精油推背' }
             ]
         }
+        this.inputChange = this.inputChange.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
+        this.onKeyUp = this.onKeyUp.bind(this);
     }
 
-
+    componentDidMount() {
+        axios.get('https://www.easy-mock.com/mock/5d4959df8a7a7979928d5c7f/ReactDemo01/xiaojiejie')
+            .then((res) => {
+                // console.log(`axios：数据获取成功，内容\n${JSON.stringify(res.data.data.list)}`);
+                this.setState({
+                    list:res.data.data.list
+                })
+            })
+            .catch((error) => { 
+                console.log(`axios：数据获取失败，内容 ${error}`); 
+            })
+    }
     render() {
         return (
             <Fragment>
@@ -55,6 +68,7 @@ class Xiaojiejie extends Component {
                         })
                     }
                 </ul>
+                <Animation/>
             </Fragment>
         );
     }
@@ -82,7 +96,7 @@ class Xiaojiejie extends Component {
             inputValue: ''
         })
         // console.log(this.ul.querySelectorAll('li').length);
-        
+
     }
 
     // deleteItem(e){

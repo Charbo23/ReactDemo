@@ -1,9 +1,10 @@
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 
 }
+
 body {
     min-height: 100vh;
     padding: 20px 30px;
@@ -14,10 +15,66 @@ body {
     background-image: -o-linear-gradient(330deg, #D9AFD9 0%, #97D9E1 100%); */
 }
 
-.input {
-    border: 3px solid #99CCFF;
+ul {
+    padding: 20px 10px;
 }
 
 button {
     display: inline-block
+}
+
+.input {
+    border: 3px solid #99CCFF;
+}
+
+.footer {
+    padding-top: 50px;
+}
+
+/* .boss {
+    transition: opacity 0.5s ease-in
+} */
+
+.show {
+    /* opacity: 1; */
+    animation: show-item 2s ease-in forwards;
+}
+
+.hide {
+    /* opacity: 0; */
+    animation: hide-item 2s ease-in forwards;
+}
+
+@keyframes show-item {
+    0% {
+        opacity: 0;
+        color: blue;
+    }
+
+    50% {
+        opacity: 0.5;
+        color: red;
+    }
+
+    100% {
+        opacity: 1;
+        color: green;
+    }
+}
+
+@keyframes hide-item {
+    0% {
+        opacity: 1;
+        color: green;
+    }
+
+    50% {
+        opacity: 0.5;
+        color: red;
+    }
+
+    100% {
+        opacity: 0;
+        color: blue;
+    }
 }
