@@ -30,10 +30,11 @@ class Xiaojiejie extends Component {
                         value={this.state.inputValue} 
                         onChange={this.inputChange}
                         onKeyUp={this.onKeyUp}
+                        ref={(inputElement)=>{this.input=inputElement}}
                     />
                     <button onClick={this.addItem}>增加服务</button>
                 </div>
-                <ul>
+                <ul ref={(ulElement)=>{this.ul=ulElement}}>
                     {
                         this.state.list.map((item,index)=>{
                             return (
@@ -59,7 +60,7 @@ class Xiaojiejie extends Component {
         // console.log(e.target.value);
         // this.state.inputValue=e.target.value;
         this.setState({
-            inputValue: e.target.value
+            inputValue: this.input.value
         })
     }
     onKeyUp(e){
@@ -69,13 +70,18 @@ class Xiaojiejie extends Component {
     }
     addItem(){
         if(!this.state.inputValue){
-            return
+            return;
         }
+        
+        //setState为异步方法
         this.setState({
             //...this.state.list相当于数组中原来的元素
             list:[...this.state.list,{id:shortid.generate(),value:this.state.inputValue}],
             inputValue:''
+        },()=>{
+            console.log(this.ul.querySelectorAll('li').length);
         })
+        
     }
     
     // deleteItem(e){
