@@ -23,7 +23,7 @@ class XiaojiejieItem extends Component {
     render() {
         console.log("Child render");
         return (
-            <li>
+            <li  className={'list-item'}>
                 <span>
                     {this.props.avname}-为你做-{this.props.content.value}
                 </span>
