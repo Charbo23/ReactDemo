@@ -23,7 +23,7 @@ class XiaojiejieItem extends Component {
     render() {
         console.log("Child render");
         return (
-            <li  className={'list-item'}>
+            <li className={'list-item'}>
                 <span>
                     {this.props.avname}-为你做-{this.props.content.value}
                 </span>
@@ -48,7 +48,6 @@ XiaojiejieItem.propTypes = {
 
 XiaojiejieItem.defaultProps = {
     avname: 'Jane Doe',
-
 }
 
 export default XiaojiejieItem;

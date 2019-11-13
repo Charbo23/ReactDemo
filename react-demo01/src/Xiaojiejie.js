@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import axios from "axios";
-import shortid from 'shortid';
+import nanoid from 'nanoid';
 import './style.css';
 import XiaojiejieItem from "./XiaojiejieItem";
 import Animation from './Animation';
@@ -13,8 +13,8 @@ class Xiaojiejie extends Component {
         this.state = {
             inputValue: '',
             list: [
-                // { id: shortid.generate(), value: '基础按摩' },
-                // { id: shortid.generate(), value: '精油推背' }
+                // { id: nanoid(), value: '基础按摩' },
+                // { id: nanoid(), value: '精油推背' }
             ]
         }
         this.inputChange = this.inputChange.bind(this);
@@ -96,18 +96,19 @@ class Xiaojiejie extends Component {
             this.addItem()
         }
     }
-    async addItem() {
+    addItem() {
         if (!this.state.inputValue) {
             return;
         }
-        //setState为异步方法,可用async/await或者回调函数
-        await this.setState({
+        // 由React控制的事件处理程序，以及生命周期函数调用setState不会同步更新state 。
+        // React控制之外的事件中调用setState是同步更新的。比如原生js绑定的事件，setTimeout/setInterval等。
+        this.setState({
             //...this.state.list相当于数组中原来的元素
-            list: [...this.state.list, { id: shortid.generate(), value: this.state.inputValue }],
+            list: [...this.state.list, { id: nanoid(), value: this.state.inputValue }],
             inputValue: ''
+        }, () => {
+            console.log(`length: ${this.ul.querySelectorAll('li').length}`)
         })
-        // console.log(this.ul.querySelectorAll('li').length);
-
     }
 
     // deleteItem(e){
